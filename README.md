@@ -9,6 +9,13 @@
 
 ---
 
+## Qiita
+
+https://qiita.com/mandbjp505/items/77ea497e12ca23e221ac
+
+---
+
+
 ## 名前付きPIPE
 ---
 
