@@ -1,11 +1,16 @@
 # snatch_base64
 
+---
 ## 目次
 
-- 名前付きPIPE
-- script コマンド
-- `snatch_base64.py` 機能
+- TL;DR
+- usage
+- 仕組み
+    - 名前付きPIPE
+    - script コマンド
+    - `snatch_base64.py` 機能
 - 以上ですが、嘘かもしれない
+- 参考文献
 
 ---
 
@@ -15,6 +20,46 @@ https://qiita.com/mandbjp505/items/77ea497e12ca23e221ac
 
 ---
 
+## TL;DR
+- なぜ作った？
+    - 多段sshした先のファイルをscpで取ってくるのが大変だから、標準出力からファイルに落とせるようにした
+- 以下のようなコマンドを叩くとMac内にファイルを保存する
+    - `cat some_large_text.log | gzip | base64 -w0`
+    - `cat some_archive.tar.gz | base64 -w0`
+
+---
+
+## usage
+
+```shell:term1_ssh
+> mkfifo -m 0777 fifo.pipe
+> script -qF fifo.pipe
+> 
+```
+
+```shell:term2_snatch_base64
+> python snatch_base64.py
+
+```
+
+```shell:term1_ssh(cont.)
+> ssh user@centos.somedomain.local
+[centos]> cat some_large_text.log | gzip | base64 -w0
+ASDF....==[centos]> 
+> 
+```
+
+```shell:term2_snatch_base64(cont.)
+start capture!!
+gzip support
+dumped!!
+```
+ 
+---
+
+
+## 仕組み
+---
 
 ## 名前付きPIPE
 ---
@@ -52,7 +97,7 @@ hello!
 ## 名前付きPIPE 特徴
 
 - ターミナルが別でも伝搬可能
-- 実行ユーザーが別でも伝搬可能 `(-m 0777)　オプション`
+- 実行ユーザーが別でも伝搬可能 `-m 0777　オプション`
 - 入出力が揃わないと開始しない
 - 名前付きPIPEへの出力 (`term2`) が終了すると、 名前付きPIPEからの入力 (`term1`) も終了する
 
@@ -117,19 +162,24 @@ hello!
 
 ## `snatch_base64.py` の強み
 
-- ローカルのstdin/stoutしか見ないため、多段のsshにも対応
+- ローカルのstdin/stdoutしか見ないため、多段のsshにも対応
 - 先方サーバーにはツール等のインストールが不要
-    - base64コマンドが必要
+    - ただし base64コマンドが使えること
 - `gzip` 検出で保存時にgz展開
 - `cat` 検出でファイル名取得
 
 ---
 
-## 以上ですが、嘘かもしれない
+## 以上ですが、間違ってるかもしれない
 
-- 本書の内容は経験的なことで書いてます
+- 本書の内容は短い経験的なことで書いてます
 - 正しくない情報が含まれてるかもしれません
 - 間違ってたらごめんなさい
+
+---
+
+## reference
+- [gzip base64 encode and decode string on both linux and windows - Stack OverFlow](https://stackoverflow.com/questions/42459909/gzip-base64-encode-and-decode-string-on-both-linux-and-windows)
 
 ---
 
