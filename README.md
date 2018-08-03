@@ -61,10 +61,10 @@ dumped!!
 ## 仕組み
 ---
 
-## 名前付きPIPE
+### 名前付きPIPE
 ---
 
-## 名前付きPIPEって？
+#### 名前付きPIPEって？
 
 - 通常のPIPEは `|` で stdout -> stdin をつなぐ
 - 名前付きPIPEは `mkfifo` で作られたファイル越しに stdout -> stdin をつなぐ
@@ -72,7 +72,7 @@ dumped!!
 
 ---
 
-## 名前付きPIPE 使い方
+#### 名前付きPIPE 使い方
 
 ```shell:term1
 > mkfifo -m 0777 my_fifo.pipe
@@ -94,7 +94,7 @@ hello!
 
 ---
 
-## 名前付きPIPE 特徴
+#### 名前付きPIPE 特徴
 
 - ターミナルが別でも伝搬可能
 - 実行ユーザーが別でも伝搬可能 `-m 0777　オプション`
@@ -103,10 +103,10 @@ hello!
 
 ---
 
-## script コマンド
+### script コマンド
 ---
 
-## script コマンド (Mac/FreeBSD系)
+#### script コマンド (Mac/FreeBSD系)
 
 - stdin/stdout を記録してくれる
 - `-F` : 名前付きPIPEへ出力する
@@ -114,7 +114,7 @@ hello!
 
 ---
 
-## script使い方 (ターミナルをミラー化)
+#### script使い方 (ターミナルをミラー化)
 
 ```shell:term1
 > mkfifo -m 0777 my_fifo.pipe
@@ -137,17 +137,17 @@ hello!
 
 ---
 
-## script 特徴
+#### script 特徴
 
 -  stdin/stdout 両方取れる
 -  ただし、stdin/stdout の区別はできない
 
 ---
 
-## `snatch_base64.py` の機能
+### `snatch_base64.py` の機能
 ---
 
-## `snatch_base64.py` がやってること
+#### `snatch_base64.py` がやってること
 
 1. 名前付きPIPEをFileOpenする
 -  → ユーザーの入力も、コマンドの結果も読み取れる
@@ -160,7 +160,7 @@ hello!
 
 ---
 
-## `snatch_base64.py` の強み
+#### `snatch_base64.py` の強み
 
 - ローカルのstdin/stdoutしか見ないため、多段のsshにも対応
 - 先方サーバーにはツール等のインストールが不要
